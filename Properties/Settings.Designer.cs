@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Inlamning_3_ra_kod.Properties
+namespace inl4.Properties
 {
 
 

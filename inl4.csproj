@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DCDCB4FE-4FAC-4B8E-8022-28CE1014D873}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Inlamning_3_ra_kod</RootNamespace>
-    <AssemblyName>Inlamning_3_ra_kod</AssemblyName>
+    <RootNamespace>inl4</RootNamespace>
+    <AssemblyName>inl4</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

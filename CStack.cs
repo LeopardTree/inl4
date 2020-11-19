@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inlamning_3_ra_kod
+namespace inl4
 {
     //public class CapitalLetter
     //{

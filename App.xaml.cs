@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Inlamning_3_ra_kod
+namespace inl4
 {
     /// <summary>
     /// Interaction logic for App.xaml

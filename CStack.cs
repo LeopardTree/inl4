@@ -6,6 +6,18 @@ using System.Threading.Tasks;
 
 namespace Inlamning_3_ra_kod
 {
+    //public class CapitalLetter
+    //{
+    //    public string value, A, B, C, D, E, F, G, H;
+    //    public int index;
+
+    //    public CapitalLetter()
+    //    {
+    //        A = B = C = D = E = F = G = H = "";
+    //        value = "";
+    //        index = 0;
+    //    }
+    //}
     /* CLASS: CStack
      * PURPOSE: Is essentially a RPN-calculator with four registers X, Y, Z, T
      *   like the HP RPN calculators. Numeric values are entered in the entry
@@ -20,11 +32,15 @@ namespace Inlamning_3_ra_kod
     public class CStack
     {
         public double X, Y, Z, T;
-        public string entry;
+        public string entry, value, values;
+        public int capLetter;
+        //public List<CapitalLetter> capLetters = new List<CapitalLetter>();
+        public string[] capLetters = new string[8];
         /* CONSTRUCTOR: CStack
          * PURPOSE: create a new stack and init X, Y, Z, T and the text entry
          * PARAMETERS: --
          */
+
         public CStack()
         {
             X = Y = Z = T = 0;
@@ -56,7 +72,12 @@ namespace Inlamning_3_ra_kod
          */
         public string VarString()
         {
-            return "insertme";
+            values = "";
+            for (int i = 0; i < capLetters.Length; i++)
+            {
+                values = values + capLetters[i] + "\n";
+            }
+            return values;
         }
         /* METHOD: SetX
          * PURPOSE: set X with overwrite
@@ -217,7 +238,7 @@ namespace Inlamning_3_ra_kod
         {
             switch (op)
             {
-                case "π": RollSetX(Math.PI); break;
+                case "": RollSetX(Math.PI); break;
                 case "e": RollSetX(Math.E); break;
             }
         }
@@ -250,6 +271,20 @@ namespace Inlamning_3_ra_kod
         public void SetAddress(string name)
         {
 
+            //string letter = name;
+            switch (name)
+            {
+                case "A": capLetter = 0; break;
+                case "B": capLetter = 1; break;
+                case "C": capLetter = 2; break;
+                case "D": capLetter = 3; break;
+                case "E": capLetter = 4; break;
+                case "F": capLetter = 5; break;
+                case "G": capLetter = 6; break;
+                case "H": capLetter = 7; break;
+
+            }
+
         }
         /* METHOD: SetVar
          * PURPOSE: 
@@ -259,7 +294,19 @@ namespace Inlamning_3_ra_kod
          */
         public void SetVar()
         {
-
+            value = X.ToString();
+            for(int i = 0; i < capLetters.Length; i++)
+            {
+                
+                if(i == capLetter)
+                {
+                    capLetters[i] = value;
+                }
+                else if(capLetters[i] == "")
+                capLetters[i] = "";
+            }
+            //var letter = new CapitalLetter() { index = capLetter, value = X.ToString() };
+            //capLetters.Add(letter);
         }
         /* METHOD: GetVar
          * PURPOSE: 

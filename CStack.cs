@@ -252,7 +252,7 @@ namespace inl4
             double tmp = T;
             T = Z; Z = Y; Y = X; X = tmp;
         }
-        /* METHOD: Roll
+        /* METHOD: RollSetX
          * PURPOSE: rolls the stack up and puts a new value in X
          * PARAMETERS: double newX - the new value to put into X
          * RETURNS: --
@@ -316,7 +316,7 @@ namespace inl4
          */
         public void GetVar()
         {
-
+            T = Z; Z = Y; Y = X; X = Convert.ToDouble(value);
         }
     }
 }

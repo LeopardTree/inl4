@@ -3,21 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace inl4
 {
-    //public class CapitalLetter
-    //{
-    //    public string value, A, B, C, D, E, F, G, H;
-    //    public int index;
-
-    //    public CapitalLetter()
-    //    {
-    //        A = B = C = D = E = F = G = H = "";
-    //        value = "";
-    //        index = 0;
-    //    }
-    //}
     /* CLASS: CStack
      * PURPOSE: Is essentially a RPN-calculator with four registers X, Y, Z, T
      *   like the HP RPN calculators. Numeric values are entered in the entry
@@ -32,10 +21,11 @@ namespace inl4
     public class CStack
     {
         public double X, Y, Z, T;
-        public string entry, value, values;
+        public string entry, value, values, letter, A, B, C, D, E, F, G, H;
         public int capLetter;
-        //public List<CapitalLetter> capLetters = new List<CapitalLetter>();
+        public string filePath = "C:\\Users\\ludvi\\molkfreecalc.clc";
         public string[] capLetters = new string[8];
+        public string[] lines = new string[12];
         /* CONSTRUCTOR: CStack
          * PURPOSE: create a new stack and init X, Y, Z, T and the text entry
          * PARAMETERS: --
@@ -43,7 +33,7 @@ namespace inl4
 
         public CStack()
         {
-            X = Y = Z = T = 0;
+            Load(filePath);
             entry = "";
         }
         /* METHOD: Exit
@@ -53,7 +43,12 @@ namespace inl4
          */
         public void Exit()
         {
+            Save(filePath);
+            //for(int i = 0; i < 4; i++)
+            //{
 
+            //}
+            //File.WriteAllLines(filePath, lines);
         }
         /* METHOD: StackString
          * PURPOSE: construct a string to write out in a stack view
@@ -68,7 +63,7 @@ namespace inl4
         /* METHOD: VarString
          * PURPOSE: construct a string to write out in a variable list
          * PARAMETERS: --
-         * RETURNS: NOT YET IMPLEMENTED
+         * RETURNS: string with values fro A-H with newline between
          */
         public string VarString()
         {
@@ -262,61 +257,86 @@ namespace inl4
         {
             T = Z; Z = Y; Y = X; X = newX;
         }
+        
         /* METHOD: SetAddress
-         * PURPOSE: 
+         * PURPOSE: assign a string the letter clicked
          * PARAMETERS: string name - variable name
-         * RETURNS: --
-         * FEATURES: NOT YET IMPLEMENTED
          */
         public void SetAddress(string name)
         {
-
-            //string letter = name;
-            switch (name)
-            {
-                case "A": capLetter = 0; break;
-                case "B": capLetter = 1; break;
-                case "C": capLetter = 2; break;
-                case "D": capLetter = 3; break;
-                case "E": capLetter = 4; break;
-                case "F": capLetter = 5; break;
-                case "G": capLetter = 6; break;
-                case "H": capLetter = 7; break;
-
-            }
-
+            letter = name;
         }
         /* METHOD: SetVar
-         * PURPOSE: 
+         * PURPOSE: Sets a new value for the clicked "letter-button".
          * PARAMETERS: --
          * RETURNS: --
-         * FEATURES: NOT YET IMPLEMENTED
+         * FEATURES: The array capLetters are given a new value at an index.
          */
         public void SetVar()
         {
             value = X.ToString();
-            for(int i = 0; i < capLetters.Length; i++)
+            switch (letter)
             {
-                
-                if(i == capLetter)
-                {
-                    capLetters[i] = value;
-                }
-                else if(capLetters[i] == "")
-                capLetters[i] = "";
+                case "A": capLetters[0] = value; break;
+                case "B": capLetters[1] = value; break;
+                case "C": capLetters[2] = value; break;
+                case "D": capLetters[3] = value; break;
+                case "E": capLetters[4] = value; break;
+                case "F": capLetters[5] = value; break;
+                case "G": capLetters[6] = value; break;
+                case "H": capLetters[7] = value; break;
             }
-            //var letter = new CapitalLetter() { index = capLetter, value = X.ToString() };
-            //capLetters.Add(letter);
         }
         /* METHOD: GetVar
-         * PURPOSE: 
+         * PURPOSE: Assigns X the last value stored in A-H. 
+         * Rolls the stack so Y gets the last value of X and so on.
          * PARAMETERS: --
          * RETURNS: --
-         * FEATURES: NOT YET IMPLEMENTED
+         * FEATURES: T is dropped
          */
         public void GetVar()
         {
             T = Z; Z = Y; Y = X; X = Convert.ToDouble(value);
+        }
+        /* METHOD: Load
+         * PURPOSE: Reads line by line from a texfile. 
+         * PARAMETERS: string filePath
+         * RETURNS: --
+         * FEATURES: First four lines are assigned to X-T with RollSetX method. 
+         * The rest to the array of capital letters.
+         */
+        public void Load(string filePath)
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            for (int i = 0; i < 4; i++)
+            {
+                RollSetX(double.Parse(lines[i]));
+            }
+            for (int i = 4; i < lines.Length; i++)
+            {
+                capLetters[i - 4] = lines[i];
+            }
+        }
+        /* METHOD: Save
+         * PURPOSE: Writes to a textfile.
+         * PARAMETERS: string filePath
+         * RETURNS: --
+         * FEATURES: First four lines are values from T-X and the rest values from the array of capital letters.
+         */
+        public void Save(string filePath)
+        {
+            
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.WriteLine($"{T}");
+                writer.WriteLine($"{Z}");
+                writer.WriteLine($"{Y}");
+                writer.WriteLine($"{X}");
+                for(int i = 0; i < capLetters.Length; i++)
+                {
+                    writer.WriteLine($"{capLetters[i]}");
+                }
+            }
         }
     }
 }
